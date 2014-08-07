@@ -1,9 +1,5 @@
 var express = require('express');
 var passport = require('passport');
-var session = require('express-session');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var ensureLogin = require('lockit-ensure-login');
 
 var utils = require('./lib/utils');
 var defaultSettings = require('./settings');
@@ -23,7 +19,8 @@ function initialize() {
   }
   if (lockit.lockit) {
     var config = lockit.lockit.config;
-    exports.ensureLogin = ensureLogin(config.login.route);
+    exports.ensureLogin = utils.ensureLogin(config.login.route);
+    exports.populateUser = utils.populateUser;
   }
   if (oauth2.router) {
     router.use(oauth2.router);

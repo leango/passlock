@@ -12,15 +12,11 @@ function initialize() {
   }
   var lockit = require('./lib/lockit');
   var oauth2 = require('./lib/oauth2');
+  var routers = require('./lib/routers');
   var router = express.Router();
 
   if (lockit.router) {
     router.use(lockit.router);
-  }
-  if (lockit.lockit) {
-    var config = lockit.lockit.config;
-    exports.ensureLogin = utils.ensureLogin(config.login.route);
-    exports.populateUser = utils.populateUser;
   }
   if (oauth2.router) {
     router.use(oauth2.router);
@@ -28,6 +24,10 @@ function initialize() {
       session: false
     });
   }
+  exports.ensureLogin = routers.ensureLogin;
+  exports.ensureLogout = routers.ensureLogout;
+  exports.populateUser = routers.populateUser;
+  
   exports.router = router;
   exports.settings = settings;
 }

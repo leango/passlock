@@ -1,3 +1,0 @@
-var app = require('../app.js');
-var settings = require('../settings');
-app.listen(app.get('port'), app.get('bindip'));
